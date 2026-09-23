@@ -1,0 +1,125 @@
+Loading graph...
+Dataset: data/web-Stanford.txt
+
+Number of nodes: 281,903
+Number of edges: 2,312,497
+
+Running PageRank...
+
+Iteration   1 | difference = 9.577319033004e-01
+Iteration   2 | difference = 4.923489038918e-01
+Iteration   3 | difference = 2.436662667106e-01
+Iteration   4 | difference = 1.252647498354e-01
+Iteration   5 | difference = 7.261720877700e-02
+Iteration   6 | difference = 4.694600264594e-02
+Iteration   7 | difference = 3.270999047344e-02
+Iteration   8 | difference = 2.358489321680e-02
+Iteration   9 | difference = 1.756899690476e-02
+Iteration  10 | difference = 1.356056979429e-02
+Iteration  11 | difference = 1.062993657737e-02
+Iteration  12 | difference = 8.425367130772e-03
+Iteration  13 | difference = 6.748229449535e-03
+Iteration  14 | difference = 5.455714794574e-03
+Iteration  15 | difference = 4.429433432613e-03
+Iteration  16 | difference = 3.615793439937e-03
+Iteration  17 | difference = 2.960523477519e-03
+Iteration  18 | difference = 2.433902344578e-03
+Iteration  19 | difference = 2.005354001181e-03
+Iteration  20 | difference = 1.656896721269e-03
+Iteration  21 | difference = 1.371369544344e-03
+Iteration  22 | difference = 1.137469850180e-03
+Iteration  23 | difference = 9.445560821163e-04
+Iteration  24 | difference = 7.857360018794e-04
+Iteration  25 | difference = 6.540835918153e-04
+Iteration  26 | difference = 5.454898760041e-04
+Iteration  27 | difference = 4.552464325419e-04
+Iteration  28 | difference = 3.805030367350e-04
+Iteration  29 | difference = 3.181654756472e-04
+Iteration  30 | difference = 2.663354466616e-04
+Iteration  31 | difference = 2.229818302443e-04
+Iteration  32 | difference = 1.868659238892e-04
+Iteration  33 | difference = 1.566183962088e-04
+Iteration  34 | difference = 1.313931324276e-04
+Iteration  35 | difference = 1.102317624868e-04
+Iteration  36 | difference = 9.256110876198e-05
+Iteration  37 | difference = 7.771173484615e-05
+Iteration  38 | difference = 6.530112509580e-05
+Iteration  39 | difference = 5.487221709316e-05
+Iteration  40 | difference = 4.614434959801e-05
+Iteration  41 | difference = 3.880437075910e-05
+Iteration  42 | difference = 3.265847198118e-05
+Iteration  43 | difference = 2.748310159636e-05
+Iteration  44 | difference = 2.314782022047e-05
+Iteration  45 | difference = 1.949655617736e-05
+Iteration  46 | difference = 1.643075365818e-05
+Iteration  47 | difference = 1.384510963713e-05
+Iteration  48 | difference = 1.167313734704e-05
+Iteration  49 | difference = 9.840968787096e-06
+Iteration  50 | difference = 8.301341536029e-06
+Iteration  51 | difference = 7.001564025781e-06
+Iteration  52 | difference = 5.908293699038e-06
+Iteration  53 | difference = 4.984855305549e-06
+Iteration  54 | difference = 4.208331274129e-06
+Iteration  55 | difference = 3.551906511031e-06
+Iteration  56 | difference = 2.999606735836e-06
+Iteration  57 | difference = 2.532758227513e-06
+Iteration  58 | difference = 2.139850764285e-06
+Iteration  59 | difference = 1.807549851189e-06
+Iteration  60 | difference = 1.527744898242e-06
+Iteration  61 | difference = 1.290863602114e-06
+Iteration  62 | difference = 1.091284383431e-06
+Iteration  63 | difference = 9.222750313568e-07
+Iteration  64 | difference = 7.798343607994e-07
+Iteration  65 | difference = 6.591944273255e-07
+Iteration  66 | difference = 5.574962385071e-07
+Iteration  67 | difference = 4.713368386389e-07
+Iteration  68 | difference = 3.986857528924e-07
+Iteration  69 | difference = 3.371357739153e-07
+Iteration  70 | difference = 2.852151756559e-07
+Iteration  71 | difference = 2.412231670111e-07
+Iteration  72 | difference = 2.041056085792e-07
+Iteration  73 | difference = 1.726476798063e-07
+Iteration  74 | difference = 1.461011836000e-07
+Iteration  75 | difference = 1.235991481622e-07
+Iteration  76 | difference = 1.046091775818e-07
+Iteration  77 | difference = 8.850756659850e-08
+Iteration  78 | difference = 7.492006359672e-08
+Iteration  79 | difference = 6.339563648730e-08
+Iteration  80 | difference = 5.366954803210e-08
+Iteration  81 | difference = 4.542062653275e-08
+Iteration  82 | difference = 3.845761452784e-08
+Iteration  83 | difference = 3.255197643552e-08
+Iteration  84 | difference = 2.756549904735e-08
+Iteration  85 | difference = 2.333590738823e-08
+Iteration  86 | difference = 1.976348749373e-08
+Iteration  87 | difference = 1.673314521081e-08
+Iteration  88 | difference = 1.417301313372e-08
+Iteration  89 | difference = 1.200102187657e-08
+Iteration  90 | difference = 1.016596217329e-08
+Iteration  91 | difference = 8.608935364175e-09
+
+Converged after 91 iterations.
+
+============================================================
+TOP 20 PAGES
+============================================================
+ 1. Node    89073 PageRank = 1.130285500291e-02
+ 2. Node   226411 PageRank = 9.267830908541e-03
+ 3. Node   241454 PageRank = 8.297272339824e-03
+ 4. Node   262860 PageRank = 3.023117198944e-03
+ 5. Node   134832 PageRank = 3.001278905831e-03
+ 6. Node   234704 PageRank = 2.571731269598e-03
+ 7. Node   136821 PageRank = 2.453713727145e-03
+ 8. Node    68889 PageRank = 2.430790669083e-03
+ 9. Node   105607 PageRank = 2.391045914093e-03
+10. Node    69358 PageRank = 2.364014286081e-03
+11. Node    67756 PageRank = 2.301000610126e-03
+12. Node   225872 PageRank = 2.267415007646e-03
+13. Node   186750 PageRank = 2.232447430678e-03
+14. Node   272442 PageRank = 2.146547796662e-03
+15. Node   251796 PageRank = 2.146547796662e-03
+16. Node    95163 PageRank = 2.146547796662e-03
+17. Node   119479 PageRank = 2.036248533839e-03
+18. Node   231363 PageRank = 2.007699693871e-03
+19. Node    55788 PageRank = 1.957045619458e-03
+20. Node   167295 PageRank = 1.916247075784e-03
