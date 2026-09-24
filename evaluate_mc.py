@@ -49,8 +49,14 @@ def main():
     )
 
     methods = {
+        "MC Endpoint - Random Start":
+            "results/mc_endpoint_random_rank.npy",
+
         "MC Endpoint - Cyclic Start":
             "results/mc_endpoint_cyclic_rank.npy",
+
+        "MC Complete Path":
+            "results/mc_complete_path_rank.npy",
 
         "MC Complete Path - Dangling Stop":
             "results/mc_complete_dangling_rank.npy",
@@ -72,7 +78,11 @@ def main():
 
     for name, filename in methods.items():
 
-        mc = np.load(filename)
+        try:
+            mc = np.load(filename)
+        except FileNotFoundError:
+            print(f"\nSkipping {name}: {filename} not found. Run it via main.py first.")
+            continue
 
         if len(mc) != len(exact):
             raise ValueError(

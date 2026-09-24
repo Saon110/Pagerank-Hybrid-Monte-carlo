@@ -1,50 +1,45 @@
 #!/bin/bash
 
-# Script to run all Monte Carlo experiments and evaluation
+# Runs all PageRank methods and evaluates the Monte Carlo variants
+# against the power-iteration ground truth.
+
+set -e
+
+cd "$(dirname "$0")"
 
 echo "========================================================================"
-echo "Running All Monte Carlo PageRank Experiments"
+echo "Running All PageRank Experiments"
 echo "========================================================================"
 echo ""
 
-cd /home/tahmidul-islam-omi/Pagerank-Hybrid-Monte-carlo
-
-# Step 1: Generate ground truth with Power Iteration
-echo "Step 1/5: Running Power Iteration (ground truth)..."
-python3 -u pagerank_power.py | tee results/power.txt
+echo "Step 1/7: Power Iteration (ground truth)..."
+python3 -u main.py power | tee results/power.txt
 echo ""
 
-# Step 2: Run Algorithm 2 - MC Endpoint Cyclic
-echo "Step 2/5: Running Algorithm 2 (MC Endpoint Cyclic)..."
-python3 -u mc_endpoint_cyclic.py | tee results/mc_endpoint_cyclic.txt
+echo "Step 2/7: MC Endpoint - Random Start..."
+python3 -u main.py mc-endpoint-random | tee results/mc_endpoint_random.txt
 echo ""
 
-# Step 3: Run Algorithm 4 - MC Complete Path with Dangling Stop
-echo "Step 3/5: Running Algorithm 4 (MC Complete Path - Dangling Stop)..."
-python3 -u mc_complete_path_dangling.py | tee results/mc_complete_dangling.txt
+echo "Step 3/7: MC Endpoint - Cyclic Start..."
+python3 -u main.py mc-endpoint-cyclic | tee results/mc_endpoint_cyclic.txt
 echo ""
 
-# Step 4: Run Algorithm 5 - MC Complete Path with Random Start
-echo "Step 4/5: Running Algorithm 5 (MC Complete Path - Random Start)..."
-python3 -u mc_complete_path_random.py | tee results/mc_complete_random.txt
+echo "Step 4/7: MC Complete Path..."
+python3 -u main.py mc-complete-path | tee results/mc_complete_path.txt
 echo ""
 
-# Step 5: Evaluate all methods
-echo "Step 5/5: Evaluating Monte Carlo methods against ground truth..."
+echo "Step 5/7: MC Complete Path - Dangling Stop..."
+python3 -u main.py mc-complete-dangling | tee results/mc_complete_dangling.txt
+echo ""
+
+echo "Step 6/7: MC Complete Path - Random Start..."
+python3 -u main.py mc-complete-random | tee results/mc_complete_random.txt
+echo ""
+
+echo "Step 7/7: Evaluating Monte Carlo methods against ground truth..."
 python3 evaluate_mc.py | tee results/evaluation_m1.txt
 echo ""
 
-# Verify all files were created
 echo "========================================================================"
-echo "Verification:"
+echo "All experiments completed. Results saved under results/."
 echo "========================================================================"
-ls -lh results/*rank.npy 2>/dev/null && echo "✓ All rank files created" || echo "✗ Some rank files missing"
-echo ""
-echo "Results saved to:"
-echo "  - results/power.txt"
-echo "  - results/mc_endpoint_cyclic.txt"
-echo "  - results/mc_complete_dangling.txt"
-echo "  - results/mc_complete_random.txt"
-echo "  - results/evaluation_m1.txt"
-echo ""
-echo "All experiments completed!"

@@ -1,9 +1,9 @@
 # PageRank — Setup & Run
 
-## 1. Install Python dependencies
+## 1. Install dependencies
 
 ```bash
-pip install numpy scipy
+pip install -r requirements.txt
 ```
 
 For Sparse QR:
@@ -14,78 +14,50 @@ sudo apt install libsuitesparse-dev
 pip install sparseqr
 ```
 
-Verify Sparse QR:
+## 2. Project layout
 
-```bash
-python3 -c "import sparseqr; print('sparseqr OK')"
+```
+pagerank/
+    graph.py            graph loading, transition matrix, top-k helpers
+    exact/               power / lu / qr
+    monte_carlo/          walks.py + one module per MC algorithm
+main.py                  CLI entry point for every method
+evaluate_mc.py            compares MC methods against the power-iteration ground truth
+data/                     input graphs (SNAP edge-list format)
+results/                  saved rank vectors (.npy) and run logs (.txt)
 ```
 
----
+Adding a new method: drop a module in `pagerank/exact/` or `pagerank/monte_carlo/`
+and register it in the `METHODS` dict in `main.py`.
 
-## 2. Run Power Iteration
-
-```bash
-python3 -u pagerank.py | tee results/power.txt
-```
-
----
-
-## 3. Run Sparse LU
+## 3. Run a method
 
 ```bash
-python3 -u pagerank_lu.py | tee results/lu.txt
+python3 main.py power
+python3 main.py lu
+python3 main.py qr
+python3 main.py mc-endpoint-random
+python3 main.py mc-endpoint-cyclic
+python3 main.py mc-complete-path
+python3 main.py mc-complete-dangling
+python3 main.py mc-complete-random
 ```
 
----
+Useful flags: `--dataset <path>`, `--damping <float>`, `--param <int>`
+(runs per node for fixed-start MC methods, or number of walks for
+random-start ones), `--seed <int>`.
 
-## 4. Run Sparse QR
+## 4. Run everything + evaluate
 
 ```bash
-python3 -u pagerank_qr.py | tee results/qr.txt
+./run_all_experiments.sh
 ```
 
----
+This runs the ground truth, all Monte Carlo variants, and prints their
+error against power iteration.
 
-## 5. Run All Methods Sequentially
+## 5. Evaluate manually
 
 ```bash
-python3 -u pagerank.py | tee results/power.txt && \
-python3 -u pagerank_lu.py | tee results/lu.txt && \
-python3 -u pagerank_qr.py | tee results/qr.txt
-```
-
----
-
-## 6. View Results
-
-```bash
-cat results/power.txt
-cat results/lu.txt
-cat results/qr.txt
-```
-
-Or:
-
-```bash
-less results/power.txt
-less results/lu.txt
-less results/qr.txt
-```
-
----
-
-## 7. Monitor Memory / CPU
-
-In another terminal:
-
-```bash
-htop
-```
-
----
-
-## 8. Stop a Running Program
-
-```text
-Ctrl + C
+python3 evaluate_mc.py
 ```
