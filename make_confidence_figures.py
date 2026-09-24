@@ -4,8 +4,15 @@ for a few "important" nodes (by exact rank), plot how the Monte Carlo
 estimate (mean + 95% confidence interval) moves towards the exact
 PageRank value as the number of walks per node (m) increases.
 
-Ground truth = Sparse LU (exact, direct solve).
-MC method    = Complete Path, stopping at dangling nodes (Algorithm 4).
+Ground truth = Power Iteration's result, loaded from results/power_rank.npy
+(run `python3 main.py power` first if it doesn't exist yet). We use this
+instead of re-running Sparse LU here because LU suffers from severe
+fill-in on this graph (a few hub nodes make the factor nearly dense),
+making it impractical to recompute on demand. REPORT_GUIDE.md already
+shows Power and LU agree to ~9 decimal places on this dataset, so Power's
+result is a valid stand-in for "exact".
+
+MC method = Complete Path, stopping at dangling nodes (Algorithm 4).
 
 Runs MC repeatedly (in parallel, one process per CPU core) for
 m = 1..10, TRIALS independent repeats each, to build the confidence
@@ -22,12 +29,12 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-from pagerank.graph import load_edges, adjacency_list, transition_matrix
-from pagerank.exact.lu import pagerank_lu
+from pagerank.graph import load_edges, adjacency_list
 from pagerank.monte_carlo.complete_path_dangling import mc_complete_path_dangling
 
 
 DATASET = "data/web-Stanford.txt"
+GROUND_TRUTH_FILE = "results/power_rank.npy"
 DAMPING = 0.85
 M_VALUES = list(range(1, 11))
 TRIALS = 10
@@ -54,9 +61,12 @@ def main():
     n = len(nodes)
     graph = adjacency_list(source_idx, destination_idx, n)
 
-    print("Computing exact ground truth (Sparse LU)...")
-    P = transition_matrix(source_idx, destination_idx, out_degree, n)
-    exact_rank = pagerank_lu(P, out_degree, damping=DAMPING)
+    print(f"Loading ground truth from {GROUND_TRUTH_FILE} ...")
+    if not os.path.exists(GROUND_TRUTH_FILE):
+        raise FileNotFoundError(
+            f"{GROUND_TRUTH_FILE} not found. Run `python3 main.py power` first."
+        )
+    exact_rank = np.load(GROUND_TRUTH_FILE)
 
     ranking = np.argsort(exact_rank)[::-1]
     target_index = {r: ranking[r - 1] for r in TARGET_RANKS}
@@ -100,7 +110,7 @@ def main():
         plt.plot(M_VALUES, means, "rs", label="MC complete path (dangling stop)")
         plt.plot(M_VALUES, upper, "r^--", label="MC 95% CI (upper)")
         plt.plot(M_VALUES, lower, "rv--", label="MC 95% CI (lower)")
-        plt.axhline(exact_value, color="b", label="LU (exact)")
+        plt.axhline(exact_value, color="b", label="Power Iteration (exact)")
         plt.xlabel("no. of walks per node (m)")
         plt.ylabel("PageRank")
         plt.title(f"PI vs. MC: node ranked #{r}")
