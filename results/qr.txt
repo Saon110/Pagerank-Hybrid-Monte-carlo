@@ -1,0 +1,7 @@
+Loading graph from data/web-Stanford.txt ...
+Number of nodes: 281,903
+Number of edges: 2,312,497
+
+Running method: qr
+Dangling nodes: 172
+Running SuiteSparseQR (single factorization, two right-hand sides)...
