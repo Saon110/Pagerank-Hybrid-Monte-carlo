@@ -1,3 +1,4 @@
+import random
 import time
 import numpy as np
 
@@ -57,6 +58,8 @@ def mc_endpoint_cyclic(
 
 def main():
 
+    random.seed(42)
+
     print("Loading graph...")
 
     nodes, graph = load_graph(DATASET)
@@ -91,6 +94,16 @@ def main():
     print(f"Sum of PageRank: {rank.sum():.12f}")
 
     print_top_k(rank, nodes)
+
+    np.save(
+        "results/mc_endpoint_cyclic_rank.npy",
+        rank
+    )
+
+    print(
+        "\nSaved PageRank vector to "
+        "results/mc_endpoint_cyclic_rank.npy"
+    )
 
 
 if __name__ == "__main__":

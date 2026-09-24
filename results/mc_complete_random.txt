@@ -6,29 +6,31 @@ Algorithm 5
 MC complete path with random start
 Number of walks: 281,903
 
-Runtime: 1.8312 seconds
+Runtime: 1.9903 seconds
 Sum of PageRank: 1.000000000000
 
 ============================================================
 TOP 20
 ============================================================
-  1. Node    89073 PageRank = 1.101431058753e-02
-  2. Node   226411 PageRank = 9.217604513035e-03
-  3. Node   241454 PageRank = 8.300012505331e-03
-  4. Node   134832 PageRank = 2.979902757693e-03
-  5. Node   262860 PageRank = 2.966542361541e-03
-  6. Node   234704 PageRank = 2.555576575912e-03
-  7. Node    68889 PageRank = 2.411818713319e-03
-  8. Node   105607 PageRank = 2.349826475175e-03
-  9. Node   136821 PageRank = 2.347688811790e-03
- 10. Node    69358 PageRank = 2.337000494869e-03
- 11. Node    67756 PageRank = 2.315089445180e-03
- 12. Node   225872 PageRank = 2.253097207036e-03
- 13. Node   186750 PageRank = 2.154230275513e-03
- 14. Node    95163 PageRank = 2.120027661364e-03
- 15. Node   251796 PageRank = 2.116821166288e-03
- 16. Node   272442 PageRank = 2.086359463062e-03
- 17. Node   119479 PageRank = 2.037193205223e-03
- 18. Node   231363 PageRank = 1.993905521691e-03
- 19. Node    55788 PageRank = 1.905726907090e-03
- 20. Node   167295 PageRank = 1.851216490790e-03
+  1. Node    89073 PageRank = 1.110746955078e-02
+  2. Node   226411 PageRank = 9.218832018375e-03
+  3. Node   241454 PageRank = 8.277177808509e-03
+  4. Node   134832 PageRank = 2.929413238049e-03
+  5. Node   262860 PageRank = 2.915024633823e-03
+  6. Node   136821 PageRank = 2.534525988750e-03
+  7. Node   234704 PageRank = 2.520670295792e-03
+  8. Node    68889 PageRank = 2.511077892975e-03
+  9. Node   105607 PageRank = 2.357599447904e-03
+ 10. Node    69358 PageRank = 2.306972877481e-03
+ 11. Node    67756 PageRank = 2.253148839452e-03
+ 12. Node   225872 PageRank = 2.245155170438e-03
+ 13. Node    95163 PageRank = 2.203588091565e-03
+ 14. Node   272442 PageRank = 2.172146326776e-03
+ 15. Node   251796 PageRank = 2.140704561987e-03
+ 16. Node   186750 PageRank = 2.135908360578e-03
+ 17. Node   119479 PageRank = 1.989357761986e-03
+ 18. Node   231363 PageRank = 1.979765359169e-03
+ 19. Node    55788 PageRank = 1.965376754943e-03
+ 20. Node   167295 PageRank = 1.897164112689e-03
+
+Saved PageRank vector to results/mc_complete_random_rank.npy

@@ -15,14 +15,17 @@ def evaluate(mc, exact, name):
     rel_err = relative_error(mc, exact)
 
     print()
-    print("=" * 60)
+    print("=" * 70)
     print(name)
-    print("=" * 60)
+    print("=" * 70)
 
     print(f"Mean absolute error : {abs_err.mean():.12e}")
     print(f"Max absolute error  : {abs_err.max():.12e}")
     print(f"Mean relative error : {rel_err.mean():.12e}")
     print(f"Max relative error  : {rel_err.max():.12e}")
+    print(f"L1 error            : {abs_err.sum():.12e}")
+
+    print("\nImportant PageRank positions:")
 
     # Important pages
     ranking = np.argsort(exact)[::-1]
@@ -33,9 +36,9 @@ def evaluate(mc, exact, name):
 
         print(
             f"Rank {k:4d}: "
-            f"exact={exact[idx]:.12e}, "
-            f"MC={mc[idx]:.12e}, "
-            f"relative error={rel_err[idx]:.6f}"
+            f"Exact = {exact[idx]:.12e}, "
+            f"MC = {mc[idx]:.12e}, "
+            f"Relative error = {rel_err[idx]:.6e}"
         )
 
 
@@ -45,15 +48,43 @@ def main():
         "results/power_rank.npy"
     )
 
-    mc = np.load(
-        "results/mc_rank.npy"
+    methods = {
+        "MC Endpoint - Cyclic Start":
+            "results/mc_endpoint_cyclic_rank.npy",
+
+        "MC Complete Path - Dangling Stop":
+            "results/mc_complete_dangling_rank.npy",
+
+        "MC Complete Path - Random Start":
+            "results/mc_complete_random_rank.npy",
+    }
+
+    print("Ground truth:")
+    print("Power Iteration")
+
+    print(
+        f"Number of nodes: {len(exact):,}"
     )
 
-    evaluate(
-        mc,
-        exact,
-        "Monte Carlo vs Power Iteration"
+    print(
+        f"Sum of PageRank: {exact.sum():.12f}"
     )
+
+    for name, filename in methods.items():
+
+        mc = np.load(filename)
+
+        if len(mc) != len(exact):
+            raise ValueError(
+                f"Size mismatch for {name}: "
+                f"{len(mc)} vs {len(exact)}"
+            )
+
+        evaluate(
+            mc,
+            exact,
+            name
+        )
 
 
 if __name__ == "__main__":

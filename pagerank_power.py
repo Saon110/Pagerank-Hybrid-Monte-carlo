@@ -61,8 +61,8 @@ def load_graph(filename):
 def pagerank(
     graph,
     damping=0.85,
-    tolerance=1e-8,
-    max_iterations=100
+    tolerance=1e-12,
+    max_iterations=200
 ):
     """
     Calculate PageRank using power iteration.
@@ -162,6 +162,9 @@ def main():
     print("\nRunning PageRank...\n")
 
     ranks = pagerank(graph)
+
+    np.save("results/power_rank.npy", ranks)
+    print("\nSaved PageRank vector to results/power_rank.npy")
 
     # Sort nodes by PageRank
     ranking = np.argsort(ranks)[::-1]
