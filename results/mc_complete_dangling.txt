@@ -1,0 +1,34 @@
+Loading graph...
+Number of nodes: 281,903
+Number of edges: 2,312,497
+
+Algorithm 4
+MC complete path stopping at dangling nodes
+Runs per node: 1
+
+Runtime: 1.9897 seconds
+Sum of PageRank: 1.000000000000
+
+============================================================
+TOP 20
+============================================================
+  1. Node    89073 PageRank = 1.110209067358e-02
+  2. Node   226411 PageRank = 9.276254286491e-03
+  3. Node   241454 PageRank = 8.275627490871e-03
+  4. Node   134832 PageRank = 3.025411963025e-03
+  5. Node   262860 PageRank = 2.918450253178e-03
+  6. Node   234704 PageRank = 2.635001722084e-03
+  7. Node   136821 PageRank = 2.422682728037e-03
+  8. Node    68889 PageRank = 2.409312514306e-03
+  9. Node    69358 PageRank = 2.372945532958e-03
+ 10. Node   105607 PageRank = 2.363318979072e-03
+ 11. Node    67756 PageRank = 2.336043743061e-03
+ 12. Node   225872 PageRank = 2.334974125962e-03
+ 13. Node   186750 PageRank = 2.239243395649e-03
+ 14. Node   272442 PageRank = 2.169718284249e-03
+ 15. Node    95163 PageRank = 2.162765773109e-03
+ 16. Node   251796 PageRank = 2.088427384765e-03
+ 17. Node   231363 PageRank = 1.995370697198e-03
+ 18. Node   119479 PageRank = 1.991627037353e-03
+ 19. Node    55788 PageRank = 1.964886609891e-03
+ 20. Node   167295 PageRank = 1.838671792272e-03
