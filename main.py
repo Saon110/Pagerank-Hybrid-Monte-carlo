@@ -12,6 +12,7 @@ from pagerank.monte_carlo.endpoint_cyclic import mc_endpoint_cyclic
 from pagerank.monte_carlo.complete_path import mc_complete_path
 from pagerank.monte_carlo.complete_path_dangling import mc_complete_path_dangling
 from pagerank.monte_carlo.complete_path_random import mc_complete_path_random
+from pagerank.hybrid.mc_warm_start import pagerank_hybrid
 
 
 def run_qr(P, out_degree, damping, param):
@@ -30,8 +31,14 @@ def run_qr(P, out_degree, damping, param):
 METHODS = {
     "power": {
         "uses": "adjacency",
-        "run": lambda g, out_degree, damping, param: pagerank_power(g, damping=damping),
+        "run": lambda g, out_degree, damping, param: pagerank_power(g, damping=damping)[0],
         "save": "results/power_rank.npy",
+    },
+    "hybrid-power-mc": {
+        "uses": "adjacency",
+        "run": lambda g, out_degree, damping, param: pagerank_hybrid(g, param, damping=damping),
+        "default_param": lambda n: 1,
+        "save": "results/hybrid_power_mc_rank.npy",
     },
     "lu": {
         "uses": "matrix",
