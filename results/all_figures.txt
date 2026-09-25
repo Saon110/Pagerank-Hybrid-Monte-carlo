@@ -1,0 +1,59 @@
+Loading graph...
+Loading ground truth from results/power_rank.npy ...
+
+======================================================================
+Running every method once: timing + accuracy vs ground truth
+======================================================================
+
+Building sparse transition matrix for the exact solvers...
+
+Running lu ...
+Dangling nodes: 172
+Performing sparse LU decomposition...
+lu: 37.97s, L1 error = 1.0052e-12
+
+Running mc-endpoint-random ...
+mc-endpoint-random: 0.90s, L1 error = 5.7083e-01
+
+Running mc-endpoint-cyclic ...
+mc-endpoint-cyclic: 0.82s, L1 error = 5.5314e-01
+
+Running mc-complete-path ...
+mc-complete-path: 1.21s, L1 error = 1.9517e-01
+
+Running mc-complete-dangling ...
+mc-complete-dangling: 1.28s, L1 error = 1.9675e-01
+
+Running mc-complete-random ...
+mc-complete-random: 1.38s, L1 error = 2.7073e-01
+
+Running hybrid-power-mc ...
+hybrid-power-mc: 93.30s, L1 error = 4.8559e-12
+
+Full error-metrics table:
+Method                      Mean Abs     Max Abs    Mean Rel     Max Rel          L1
+lu                         3.566e-18   1.788e-14   4.762e-13   2.420e-10   1.005e-12
+mc-endpoint-random         2.025e-06   2.021e-04   1.309e+00   2.522e+01   5.708e-01
+mc-endpoint-cyclic         1.962e-06   1.849e-04   1.284e+00   1.527e+01   5.531e-01
+mc-complete-path           6.923e-07   1.090e-04   3.051e-01   3.534e+00   1.952e-01
+mc-complete-dangling       6.980e-07   9.448e-05   3.061e-01   4.094e+00   1.968e-01
+mc-complete-random         9.604e-07   2.521e-04   5.742e-01   5.957e+00   2.707e-01
+hybrid-power-mc            1.723e-17   1.901e-14   3.266e-12   3.747e-10   4.856e-12
+
+Saved figures/accuracy_comparison.png
+Saved figures/runtime_comparison.png
+
+======================================================================
+Monte Carlo confidence-interval sweep (Complete Path - Dangling Stop)
+======================================================================
+
+Running m = 1..10, 10 trials each (100 runs total, in parallel)...
+Done in 172.4 seconds.
+
+Running Power Iteration baseline for m = 1..10 iterations...
+Saved figures/pi_1.png
+Saved figures/pi_10.png
+Saved figures/pi_100.png
+Saved figures/pi_1000.png
+
+All figures generated in ./figures/

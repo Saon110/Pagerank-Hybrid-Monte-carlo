@@ -1,11 +1,8 @@
-Loading graph...
-Dataset: data/web-Stanford.txt
-
+Loading graph from data/web-Stanford.txt ...
 Number of nodes: 281,903
 Number of edges: 2,312,497
 
-Running PageRank...
-
+Running method: power
 Iteration   1 | difference = 9.577319033004e-01
 Iteration   2 | difference = 4.923489038918e-01
 Iteration   3 | difference = 2.436662667106e-01
@@ -155,28 +152,31 @@ Iteration 146 | difference = 9.859062821340e-13
 
 Converged after 146 iterations.
 
-Saved PageRank vector to results/power_rank.npy
+Runtime: 94.9568 seconds
+Sum of PageRank: 1.000000000000
 
 ============================================================
-TOP 20 PAGES
+TOP 20
 ============================================================
- 1. Node    89073 PageRank = 1.130285488257e-02
- 2. Node   226411 PageRank = 9.267830866482e-03
- 3. Node   241454 PageRank = 8.297272327279e-03
- 4. Node   262860 PageRank = 3.023117151336e-03
- 5. Node   134832 PageRank = 3.001278900503e-03
- 6. Node   234704 PageRank = 2.571731259349e-03
- 7. Node   136821 PageRank = 2.453713727903e-03
- 8. Node    68889 PageRank = 2.430790669833e-03
- 9. Node   105607 PageRank = 2.391045906800e-03
-10. Node    69358 PageRank = 2.364014285523e-03
-11. Node    67756 PageRank = 2.301000609919e-03
-12. Node   225872 PageRank = 2.267415000853e-03
-13. Node   186750 PageRank = 2.232447424305e-03
-14. Node    95163 PageRank = 2.146547797312e-03
-15. Node   272442 PageRank = 2.146547797312e-03
-16. Node   251796 PageRank = 2.146547797312e-03
-17. Node   119479 PageRank = 2.036248534702e-03
-18. Node   231363 PageRank = 2.007699692350e-03
-19. Node    55788 PageRank = 1.957045614816e-03
-20. Node   167295 PageRank = 1.916247072640e-03
+  1. Node    89073 PageRank = 1.130285488257e-02
+  2. Node   226411 PageRank = 9.267830866482e-03
+  3. Node   241454 PageRank = 8.297272327279e-03
+  4. Node   262860 PageRank = 3.023117151336e-03
+  5. Node   134832 PageRank = 3.001278900503e-03
+  6. Node   234704 PageRank = 2.571731259349e-03
+  7. Node   136821 PageRank = 2.453713727903e-03
+  8. Node    68889 PageRank = 2.430790669833e-03
+  9. Node   105607 PageRank = 2.391045906800e-03
+ 10. Node    69358 PageRank = 2.364014285523e-03
+ 11. Node    67756 PageRank = 2.301000609919e-03
+ 12. Node   225872 PageRank = 2.267415000853e-03
+ 13. Node   186750 PageRank = 2.232447424305e-03
+ 14. Node   272442 PageRank = 2.146547797312e-03
+ 15. Node    95163 PageRank = 2.146547797312e-03
+ 16. Node   251796 PageRank = 2.146547797312e-03
+ 17. Node   119479 PageRank = 2.036248534702e-03
+ 18. Node   231363 PageRank = 2.007699692350e-03
+ 19. Node    55788 PageRank = 1.957045614816e-03
+ 20. Node   167295 PageRank = 1.916247072640e-03
+
+Saved PageRank vector to results/power_rank.npy

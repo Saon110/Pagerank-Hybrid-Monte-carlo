@@ -1,13 +1,11 @@
-Loading graph...
+Loading graph from data/web-Stanford.txt ...
 Number of nodes: 281,903
 Number of edges: 2,312,497
 
-Algorithm 2
-MC endpoint with cyclic start
-Runs per node: 1
-Total walks: 281,903
+Running method: mc-endpoint-cyclic
+Param (runs_per_node / num_walks): 1
 
-Runtime: 1.3086 seconds
+Runtime: 0.8420 seconds
 Sum of PageRank: 1.000000000000
 
 ============================================================

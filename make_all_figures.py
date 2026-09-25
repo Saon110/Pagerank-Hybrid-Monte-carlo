@@ -1,10 +1,11 @@
 """
 Master script: generates every figure and measurement used in
-REPORT_GUIDE.md, for every method except LU.
+REPORT_GUIDE.md, for every method except QR.
 
-LU is skipped: on this graph, Sparse LU suffers severe fill-in (a few
-hub nodes make the factor nearly dense) and never finished in a
-reasonable time -- see REPORT_GUIDE.md for details.
+QR is skipped: SuiteSparseQR on this graph must factorize the 150,532-node
+strongly connected core, which exhausts memory before it finishes -- see
+REPORT_GUIDE.md for details. Sparse LU produces far less fill-in on the same
+matrix and does complete, so it is included here.
 
 Ground truth = results/power_rank.npy (Power Iteration). Run
 `python3 main.py power` first if it doesn't exist yet.
@@ -31,8 +32,9 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-from pagerank.graph import load_edges, adjacency_list
+from pagerank.graph import load_edges, adjacency_list, transition_matrix
 from pagerank.exact.power import pagerank_power
+from pagerank.exact.lu import pagerank_lu
 from pagerank.monte_carlo.endpoint_random import mc_endpoint_random
 from pagerank.monte_carlo.endpoint_cyclic import mc_endpoint_cyclic
 from pagerank.monte_carlo.complete_path import mc_complete_path
@@ -55,6 +57,15 @@ def run_hybrid(graph, damping, param):
     initial_rank = mc_complete_path_dangling(graph, param, damping=damping)
     rank, _ = pagerank_power(graph, damping=damping, initial_rank=initial_rank, verbose=False)
     return rank
+
+
+# Exact solvers take the sparse transition matrix and out-degrees rather than
+# an adjacency list, so they are registered separately from the walk-based
+# methods below and run in their own loop.
+# name -> runner(P, out_degree, damping)
+MATRIX_METHODS = {
+    "lu": lambda P, out_degree, damping: pagerank_lu(P, out_degree, damping=damping),
+}
 
 
 # name -> (runner(graph, damping, param), default_param(n))
@@ -136,6 +147,25 @@ def main():
     runtimes = {}
     metrics = {}
 
+    if MATRIX_METHODS:
+        print("\nBuilding sparse transition matrix for the exact solvers...")
+        P = transition_matrix(source_idx, destination_idx, out_degree, n)
+
+        for name, runner in MATRIX_METHODS.items():
+            print(f"\nRunning {name} ...")
+            start = time.perf_counter()
+            rank = runner(P, out_degree, DAMPING)
+            elapsed = time.perf_counter() - start
+
+            runtimes[name] = elapsed
+            metrics[name] = error_metrics(rank, exact_rank)
+
+            print(f"{name}: {elapsed:.2f}s, L1 error = {metrics[name]['l1']:.4e}")
+
+        # The factorization is the memory high-water mark of this script; drop
+        # the matrix before the Monte Carlo sweep spawns its worker processes.
+        del P
+
     for name, (runner, default_param) in METHODS.items():
         param = default_param(n)
 
@@ -162,7 +192,7 @@ def main():
     names = list(metrics.keys())
     plt.bar(names, [metrics[name]["l1"] for name in names], color="darkorange")
     plt.ylabel("L1 error vs ground truth")
-    plt.title("Accuracy comparison across methods\n(ground truth = Power Iteration; LU skipped)")
+    plt.title("Accuracy comparison across methods\n(ground truth = Power Iteration; QR skipped)")
     plt.xticks(rotation=30, ha="right")
     plt.tight_layout()
     plt.savefig(f"{FIGURES_DIR}/accuracy_comparison.png", dpi=150)
@@ -173,7 +203,7 @@ def main():
     plt.figure(figsize=(8, 5))
     plt.bar(names, [runtimes[name] for name in names], color="steelblue")
     plt.ylabel("Runtime (seconds)")
-    plt.title("Runtime comparison across methods\n(LU skipped: did not finish, see report)")
+    plt.title("Runtime comparison across methods\n(QR skipped: did not finish, see report)")
     plt.xticks(rotation=30, ha="right")
     plt.tight_layout()
     plt.savefig(f"{FIGURES_DIR}/runtime_comparison.png", dpi=150)

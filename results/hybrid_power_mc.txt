@@ -1,0 +1,186 @@
+Loading graph from data/web-Stanford.txt ...
+Number of nodes: 281,903
+Number of edges: 2,312,497
+
+Running method: hybrid-power-mc
+Param (runs_per_node / num_walks): 1
+Step 1: Monte Carlo warm start (Complete Path - Dangling Stop)...
+
+Step 2: Power iteration warm-started from the MC estimate...
+Iteration   1 | difference = 1.485766452339e-01
+Iteration   2 | difference = 4.496529814370e-02
+Iteration   3 | difference = 2.186516251776e-02
+Iteration   4 | difference = 1.349214485110e-02
+Iteration   5 | difference = 9.293141686077e-03
+Iteration   6 | difference = 6.876955818218e-03
+Iteration   7 | difference = 5.297889997097e-03
+Iteration   8 | difference = 4.192786668605e-03
+Iteration   9 | difference = 3.372146759878e-03
+Iteration  10 | difference = 2.742169549869e-03
+Iteration  11 | difference = 2.247217273569e-03
+Iteration  12 | difference = 1.851820409228e-03
+Iteration  13 | difference = 1.531906425469e-03
+Iteration  14 | difference = 1.271134436752e-03
+Iteration  15 | difference = 1.057426403557e-03
+Iteration  16 | difference = 8.814718431037e-04
+Iteration  17 | difference = 7.360039407527e-04
+Iteration  18 | difference = 6.154401908353e-04
+Iteration  19 | difference = 5.152386586202e-04
+Iteration  20 | difference = 4.318743892006e-04
+Iteration  21 | difference = 3.623936745801e-04
+Iteration  22 | difference = 3.043670506383e-04
+Iteration  23 | difference = 2.558128878193e-04
+Iteration  24 | difference = 2.151478210397e-04
+Iteration  25 | difference = 1.810441386767e-04
+Iteration  26 | difference = 1.524432954185e-04
+Iteration  27 | difference = 1.284233623776e-04
+Iteration  28 | difference = 1.082496920512e-04
+Iteration  29 | difference = 9.127578333073e-05
+Iteration  30 | difference = 7.700753379284e-05
+Iteration  31 | difference = 6.498333206316e-05
+Iteration  32 | difference = 5.486658320881e-05
+Iteration  33 | difference = 4.632985180239e-05
+Iteration  34 | difference = 3.913866857063e-05
+Iteration  35 | difference = 3.306707346125e-05
+Iteration  36 | difference = 2.794672981603e-05
+Iteration  37 | difference = 2.362177998791e-05
+Iteration  38 | difference = 1.997304148002e-05
+Iteration  39 | difference = 1.689080040013e-05
+Iteration  40 | difference = 1.428656584725e-05
+Iteration  41 | difference = 1.208569452321e-05
+Iteration  42 | difference = 1.022642189762e-05
+Iteration  43 | difference = 8.654576034567e-06
+Iteration  44 | difference = 7.325365031626e-06
+Iteration  45 | difference = 6.200970300881e-06
+Iteration  46 | difference = 5.249679468901e-06
+Iteration  47 | difference = 4.444976207770e-06
+Iteration  48 | difference = 3.763931299293e-06
+Iteration  49 | difference = 3.187814123987e-06
+Iteration  50 | difference = 2.700110685156e-06
+Iteration  51 | difference = 2.287285748325e-06
+Iteration  52 | difference = 1.937817101230e-06
+Iteration  53 | difference = 1.641860386338e-06
+Iteration  54 | difference = 1.391248230455e-06
+Iteration  55 | difference = 1.179018786773e-06
+Iteration  56 | difference = 9.992108055791e-07
+Iteration  57 | difference = 8.469396777873e-07
+Iteration  58 | difference = 7.178816335860e-07
+Iteration  59 | difference = 6.085608079322e-07
+Iteration  60 | difference = 5.158967829483e-07
+Iteration  61 | difference = 4.373953896044e-07
+Iteration  62 | difference = 3.708397316919e-07
+Iteration  63 | difference = 3.144465629624e-07
+Iteration  64 | difference = 2.666291689568e-07
+Iteration  65 | difference = 2.261081814240e-07
+Iteration  66 | difference = 1.917428408677e-07
+Iteration  67 | difference = 1.626189969339e-07
+Iteration  68 | difference = 1.379152788970e-07
+Iteration  69 | difference = 1.169804411140e-07
+Iteration  70 | difference = 9.921767127616e-08
+Iteration  71 | difference = 8.416418594142e-08
+Iteration  72 | difference = 7.139055527066e-08
+Iteration  73 | difference = 6.056459166607e-08
+Iteration  74 | difference = 5.137669613443e-08
+Iteration  75 | difference = 4.358922562294e-08
+Iteration  76 | difference = 3.697999698469e-08
+Iteration  77 | difference = 3.137716101150e-08
+Iteration  78 | difference = 2.662148075902e-08
+Iteration  79 | difference = 2.258933350040e-08
+Iteration  80 | difference = 1.916695766663e-08
+Iteration  81 | difference = 1.626497125489e-08
+Iteration  82 | difference = 1.380167297394e-08
+Iteration  83 | difference = 1.171266031429e-08
+Iteration  84 | difference = 9.939535462391e-09
+Iteration  85 | difference = 8.435644695696e-09
+Iteration  86 | difference = 7.159029639366e-09
+Iteration  87 | difference = 6.076093634717e-09
+Iteration  88 | difference = 5.156868285788e-09
+Iteration  89 | difference = 4.377023133110e-09
+Iteration  90 | difference = 3.715014600667e-09
+Iteration  91 | difference = 3.153334101618e-09
+Iteration  92 | difference = 2.676536610914e-09
+Iteration  93 | difference = 2.271980204697e-09
+Iteration  94 | difference = 1.928531267311e-09
+Iteration  95 | difference = 1.637104614849e-09
+Iteration  96 | difference = 1.389678918966e-09
+Iteration  97 | difference = 1.179742153626e-09
+Iteration  98 | difference = 1.001468536131e-09
+Iteration  99 | difference = 8.502108336809e-10
+Iteration 100 | difference = 7.217629640284e-10
+Iteration 101 | difference = 6.127873656059e-10
+Iteration 102 | difference = 5.202312602607e-10
+Iteration 103 | difference = 4.416979039889e-10
+Iteration 104 | difference = 3.749976588660e-10
+Iteration 105 | difference = 3.184000160363e-10
+Iteration 106 | difference = 2.703298370632e-10
+Iteration 107 | difference = 2.295333377767e-10
+Iteration 108 | difference = 1.948880567859e-10
+Iteration 109 | difference = 1.654811289445e-10
+Iteration 110 | difference = 1.405083952401e-10
+Iteration 111 | difference = 1.193089023065e-10
+Iteration 112 | difference = 1.013072816190e-10
+Iteration 113 | difference = 8.602473154797e-11
+Iteration 114 | difference = 7.304700390860e-11
+Iteration 115 | difference = 6.202873746131e-11
+Iteration 116 | difference = 5.267262573676e-11
+Iteration 117 | difference = 4.472883368650e-11
+Iteration 118 | difference = 3.798314748192e-11
+Iteration 119 | difference = 3.225519676301e-11
+Iteration 120 | difference = 2.739124826403e-11
+Iteration 121 | difference = 2.326126619736e-11
+Iteration 122 | difference = 1.975384686267e-11
+Iteration 123 | difference = 1.677577044145e-11
+Iteration 124 | difference = 1.424650840771e-11
+Iteration 125 | difference = 1.209912402675e-11
+Iteration 126 | difference = 1.027517086370e-11
+Iteration 127 | difference = 8.726388634276e-12
+Iteration 128 | difference = 7.411119781354e-12
+Iteration 129 | difference = 6.294208805971e-12
+Iteration 130 | difference = 5.345588124846e-12
+Iteration 131 | difference = 4.540042655790e-12
+Iteration 132 | difference = 3.855832426719e-12
+Iteration 133 | difference = 3.274861928992e-12
+Iteration 134 | difference = 2.781313219790e-12
+Iteration 135 | difference = 2.362270758944e-12
+Iteration 136 | difference = 2.006387132250e-12
+Iteration 137 | difference = 1.704048078689e-12
+Iteration 138 | difference = 1.447333120861e-12
+Iteration 139 | difference = 1.229303958631e-12
+Iteration 140 | difference = 1.044085530504e-12
+Iteration 141 | difference = 8.868213673571e-13
+
+Converged after 141 iterations.
+
+For comparison: power iteration from the usual uniform (cold) start...
+
+Cold start (uniform 1/n) : 146 iterations
+Warm start (MC estimate) : 141 iterations
+
+Runtime: 188.3949 seconds
+Sum of PageRank: 1.000000000000
+
+============================================================
+TOP 20
+============================================================
+  1. Node    89073 PageRank = 1.130285488255e-02
+  2. Node   226411 PageRank = 9.267830866479e-03
+  3. Node   241454 PageRank = 8.297272327278e-03
+  4. Node   262860 PageRank = 3.023117151332e-03
+  5. Node   134832 PageRank = 3.001278900503e-03
+  6. Node   234704 PageRank = 2.571731259349e-03
+  7. Node   136821 PageRank = 2.453713727898e-03
+  8. Node    68889 PageRank = 2.430790669827e-03
+  9. Node   105607 PageRank = 2.391045906799e-03
+ 10. Node    69358 PageRank = 2.364014285523e-03
+ 11. Node    67756 PageRank = 2.301000609919e-03
+ 12. Node   225872 PageRank = 2.267415000852e-03
+ 13. Node   186750 PageRank = 2.232447424305e-03
+ 14. Node    95163 PageRank = 2.146547797307e-03
+ 15. Node   272442 PageRank = 2.146547797307e-03
+ 16. Node   251796 PageRank = 2.146547797307e-03
+ 17. Node   119479 PageRank = 2.036248534699e-03
+ 18. Node   231363 PageRank = 2.007699692350e-03
+ 19. Node    55788 PageRank = 1.957045614816e-03
+ 20. Node   167295 PageRank = 1.916247072640e-03
+
+Saved PageRank vector to results/hybrid_power_mc_rank.npy

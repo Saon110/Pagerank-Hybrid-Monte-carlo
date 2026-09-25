@@ -1,0 +1,35 @@
+Loading graph from data/web-Stanford.txt ...
+Number of nodes: 281,903
+Number of edges: 2,312,497
+
+Running method: mc-endpoint-random
+Param (runs_per_node / num_walks): 281,903
+
+Runtime: 0.9282 seconds
+Sum of PageRank: 1.000000000000
+
+============================================================
+TOP 20
+============================================================
+  1. Node    89073 PageRank = 1.113858312966e-02
+  2. Node   226411 PageRank = 8.999549490428e-03
+  3. Node   241454 PageRank = 8.332653430435e-03
+  4. Node   262860 PageRank = 2.954917116881e-03
+  5. Node   134832 PageRank = 2.951369797413e-03
+  6. Node    68889 PageRank = 2.585995892204e-03
+  7. Node   136821 PageRank = 2.525691461247e-03
+  8. Node   234704 PageRank = 2.522144141779e-03
+  9. Node   105607 PageRank = 2.461839710823e-03
+ 10. Node    69358 PageRank = 2.405082599334e-03
+ 11. Node   225872 PageRank = 2.376704043589e-03
+ 12. Node    67756 PageRank = 2.369609404653e-03
+ 13. Node    95163 PageRank = 2.149675597635e-03
+ 14. Node   272442 PageRank = 2.117749722422e-03
+ 15. Node   251796 PageRank = 2.078729208274e-03
+ 16. Node   186750 PageRank = 1.993593541041e-03
+ 17. Node   119479 PageRank = 1.972309624232e-03
+ 18. Node   231363 PageRank = 1.936836429552e-03
+ 19. Node   167295 PageRank = 1.869437359659e-03
+ 20. Node    55788 PageRank = 1.844606123383e-03
+
+Saved PageRank vector to results/mc_endpoint_random_rank.npy

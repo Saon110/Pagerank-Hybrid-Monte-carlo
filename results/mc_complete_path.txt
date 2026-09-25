@@ -1,0 +1,35 @@
+Loading graph from data/web-Stanford.txt ...
+Number of nodes: 281,903
+Number of edges: 2,312,497
+
+Running method: mc-complete-path
+Param (runs_per_node / num_walks): 1
+
+Runtime: 1.2128 seconds
+Sum of PageRank: 1.001851523396
+
+============================================================
+TOP 20
+============================================================
+  1. Node    89073 PageRank = 1.127675122294e-02
+  2. Node   226411 PageRank = 9.220724859260e-03
+  3. Node   241454 PageRank = 8.397569376700e-03
+  4. Node   262860 PageRank = 3.079782762156e-03
+  5. Node   134832 PageRank = 2.908979329769e-03
+  6. Node   234704 PageRank = 2.556198408672e-03
+  7. Node    68889 PageRank = 2.484365189445e-03
+  8. Node   136821 PageRank = 2.438604768307e-03
+  9. Node   105607 PageRank = 2.333781478026e-03
+ 10. Node    69358 PageRank = 2.325800009223e-03
+ 11. Node    67756 PageRank = 2.305580288255e-03
+ 12. Node   225872 PageRank = 2.293874134011e-03
+ 13. Node   186750 PageRank = 2.234811264868e-03
+ 14. Node   272442 PageRank = 2.197032312533e-03
+ 15. Node    95163 PageRank = 2.175216297805e-03
+ 16. Node   251796 PageRank = 2.171491612363e-03
+ 17. Node   119479 PageRank = 2.024100488466e-03
+ 18. Node   231363 PageRank = 2.023568390546e-03
+ 19. Node    55788 PageRank = 1.998027690376e-03
+ 20. Node   167295 PageRank = 1.949074681717e-03
+
+Saved PageRank vector to results/mc_complete_path_rank.npy
