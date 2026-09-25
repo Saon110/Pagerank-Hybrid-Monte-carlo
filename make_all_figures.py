@@ -1,25 +1,27 @@
 """
-Master script: generates every figure and measurement used in
-REPORT_GUIDE.md, for every method except LU.
+# Master script: generates every figure and measurement used in
+# REPORT_GUIDE.md, for every method: Power Iteration, LU, QR, the three
+# Monte Carlo variants (endpoint-cyclic, complete-path-dangling,
+# complete-path-random) and the hybrid MC + Power method.
 
-LU is skipped: on this graph, Sparse LU suffers severe fill-in (a few
-hub nodes make the factor nearly dense) and never finished in a
-reasonable time -- see REPORT_GUIDE.md for details.
+# Ground truth = results/power_rank.npy (Power Iteration). It is also
+# re-run here to time it, but run `python3 main.py power` first to create
+# the ground-truth file if it doesn't exist yet.
 
-Ground truth = results/power_rank.npy (Power Iteration). Run
-`python3 main.py power` first if it doesn't exist yet.
+# Note: Sparse QR on this graph is slow (QR fill-in is much heavier than
+# LU), so that step dominates the total runtime.
 
-Produces, all under figures/:
-  - accuracy_comparison.png   L1 error of every method vs ground truth
-  - runtime_comparison.png    wall-clock time of every method
-  - pi_1.png, pi_10.png, pi_100.png, pi_1000.png
-        Monte Carlo mean + 95% confidence interval vs number of walks
-        per node (m = 1..10), against the exact value, for the nodes
-        ranked #1, #10, #100, #1000 by ground truth.
+# Produces, all under figures/:
+#   - accuracy_comparison.png   L1 error of every method vs ground truth
+#   - runtime_comparison.png    wall-clock time of every method
+#   - pi_1.png, pi_10.png, pi_100.png, pi_1000.png
+#         Monte Carlo mean + 95% confidence interval vs number of walks
+#         per node (m = 1..10), against the exact value, for the nodes
+#         ranked #1, #10, #100, #1000 by ground truth.
 
-Also prints a full error-metrics table (mean/max absolute & relative
-error, L1 error) for every method, to copy into the report.
-"""
+# Also prints a full error-metrics table (mean/max absolute & relative
+# error, L1 error) for every method, to copy into the report.
+
 
 import os
 import random
@@ -31,11 +33,10 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-from pagerank.graph import load_edges, adjacency_list
+from pagerank.graph import load_edges, adjacency_list, transition_matrix
 from pagerank.exact.power import pagerank_power
-from pagerank.monte_carlo.endpoint_random import mc_endpoint_random
+from pagerank.exact.lu import pagerank_lu
 from pagerank.monte_carlo.endpoint_cyclic import mc_endpoint_cyclic
-from pagerank.monte_carlo.complete_path import mc_complete_path
 from pagerank.monte_carlo.complete_path_dangling import mc_complete_path_dangling
 from pagerank.monte_carlo.complete_path_random import mc_complete_path_random
 
@@ -51,35 +52,60 @@ TRIALS = 10
 TARGET_RANKS = [1, 10, 100, 1000]
 
 
-def run_hybrid(graph, damping, param):
+def run_hybrid(graph, out_degree, damping, param):
     initial_rank = mc_complete_path_dangling(graph, param, damping=damping)
     rank, _ = pagerank_power(graph, damping=damping, initial_rank=initial_rank, verbose=False)
     return rank
 
 
-# name -> (runner(graph, damping, param), default_param(n))
+def run_lu(P, out_degree, damping, param):
+    return pagerank_lu(P, out_degree, damping=damping)
+
+
+def run_qr(P, out_degree, damping, param):
+    # Imported lazily: sparseqr needs libsuitesparse-dev and shouldn't be
+    # required to run every other method.
+    from pagerank.exact.qr import pagerank_qr
+
+    return pagerank_qr(P, out_degree, damping=damping)
+
+
+# name -> (uses, runner(data, out_degree, damping, param), default_param(n) or None)
+# "uses" is "adjacency" (needs the graph as an adjacency list) or
+# "matrix" (needs the sparse transition matrix P).
 METHODS = {
-    "mc-endpoint-random": (
-        lambda g, damping, param: mc_endpoint_random(g, param, damping=damping),
-        lambda n: n,
+    "power": (
+        "adjacency",
+        lambda g, od, damping, param: pagerank_power(g, damping=damping)[0],
+        None,
+    ),
+    "lu": (
+        "matrix",
+        run_lu,
+        None,
+    ),
+    "qr": (
+        "matrix",
+        run_qr,
+        None,
     ),
     "mc-endpoint-cyclic": (
-        lambda g, damping, param: mc_endpoint_cyclic(g, param, damping=damping),
-        lambda n: 1,
-    ),
-    "mc-complete-path": (
-        lambda g, damping, param: mc_complete_path(g, param, damping=damping),
+        "adjacency",
+        lambda g, od, damping, param: mc_endpoint_cyclic(g, param, damping=damping),
         lambda n: 1,
     ),
     "mc-complete-dangling": (
-        lambda g, damping, param: mc_complete_path_dangling(g, param, damping=damping),
+        "adjacency",
+        lambda g, od, damping, param: mc_complete_path_dangling(g, param, damping=damping),
         lambda n: 1,
     ),
     "mc-complete-random": (
-        lambda g, damping, param: mc_complete_path_random(g, param, damping=damping),
+        "adjacency",
+        lambda g, od, damping, param: mc_complete_path_random(g, param, damping=damping),
         lambda n: n,
     ),
     "hybrid-power-mc": (
+        "adjacency",
         run_hybrid,
         lambda n: 1,
     ),
@@ -116,6 +142,7 @@ def main():
     nodes, source_idx, destination_idx, out_degree = load_edges(DATASET)
     n = len(nodes)
     graph = adjacency_list(source_idx, destination_idx, n)
+    P = transition_matrix(source_idx, destination_idx, out_degree, n)
 
     print(f"Loading ground truth from {GROUND_TRUTH_FILE} ...")
     if not os.path.exists(GROUND_TRUTH_FILE):
@@ -136,12 +163,13 @@ def main():
     runtimes = {}
     metrics = {}
 
-    for name, (runner, default_param) in METHODS.items():
-        param = default_param(n)
+    for name, (uses, runner, default_param) in METHODS.items():
+        param = default_param(n) if default_param is not None else None
+        data = graph if uses == "adjacency" else P
 
         print(f"\nRunning {name} ...")
         start = time.perf_counter()
-        rank = runner(graph, DAMPING, param)
+        rank = runner(data, out_degree, DAMPING, param)
         elapsed = time.perf_counter() - start
 
         runtimes[name] = elapsed
@@ -162,7 +190,7 @@ def main():
     names = list(metrics.keys())
     plt.bar(names, [metrics[name]["l1"] for name in names], color="darkorange")
     plt.ylabel("L1 error vs ground truth")
-    plt.title("Accuracy comparison across methods\n(ground truth = Power Iteration; LU skipped)")
+    plt.title("Accuracy comparison across methods\n(ground truth = Power Iteration)")
     plt.xticks(rotation=30, ha="right")
     plt.tight_layout()
     plt.savefig(f"{FIGURES_DIR}/accuracy_comparison.png", dpi=150)
@@ -173,7 +201,7 @@ def main():
     plt.figure(figsize=(8, 5))
     plt.bar(names, [runtimes[name] for name in names], color="steelblue")
     plt.ylabel("Runtime (seconds)")
-    plt.title("Runtime comparison across methods\n(LU skipped: did not finish, see report)")
+    plt.title("Runtime comparison across methods")
     plt.xticks(rotation=30, ha="right")
     plt.tight_layout()
     plt.savefig(f"{FIGURES_DIR}/runtime_comparison.png", dpi=150)
@@ -252,3 +280,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+"""
