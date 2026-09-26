@@ -1,2 +1,16 @@
 .venv/
 __pycache__/
+
+# Compiled report: regenerate with `pdflatex report.tex` (run it twice so the
+# cross-references resolve). Kept out of version control so the binary file
+# never causes merge conflicts.
+report.pdf
+
+# LaTeX build files
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
