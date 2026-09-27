@@ -14,6 +14,11 @@ LU), so that step dominates the total runtime.
 Produces, all under figures/:
   - accuracy_comparison.png   L1 error of every method vs ground truth
   - runtime_comparison.png    wall-clock time of every method
+  - accuracy_vs_cost.png      L1 error vs runtime, one point per method
+  - hybrid_warm_start.png     power-iteration steps to converge, cold
+                              (uniform) start vs MC-warm-started, swept
+                              over the number of MC walks per node used
+                              for the warm start
   - pi_1.png, pi_10.png, pi_100.png, pi_1000.png
         Monte Carlo mean + 95% confidence interval vs number of walks
         per node (m = 1..10), against the exact value, for the nodes
@@ -50,10 +55,32 @@ M_VALUES = list(range(1, 11))
 TRIALS = 10
 TARGET_RANKS = [1, 10, 100, 1000]
 
+# Categorical palette (fixed order, one hue per method) - see dataviz skill
+# references/palette.md. Points are also direct-labeled, so identity never
+# rests on color alone.
+METHOD_COLORS = {
+    "power": "#2a78d6",
+    "lu": "#eb6834",
+    "qr": "#1baf7a",
+    "mc-endpoint-cyclic": "#eda100",
+    "mc-complete-dangling": "#e87ba4",
+    "mc-complete-random": "#008300",
+    "hybrid-power-mc": "#4a3aa7",
+}
+
+ITERATIONS = {}
+
+
+def run_power(graph, out_degree, damping, param):
+    rank, iterations = pagerank_power(graph, damping=damping, verbose=False)
+    ITERATIONS["power"] = iterations
+    return rank
+
 
 def run_hybrid(graph, out_degree, damping, param):
     initial_rank = mc_complete_path_dangling(graph, param, damping=damping)
-    rank, _ = pagerank_power(graph, damping=damping, initial_rank=initial_rank, verbose=False)
+    rank, iterations = pagerank_power(graph, damping=damping, initial_rank=initial_rank, verbose=False)
+    ITERATIONS["hybrid-power-mc"] = iterations
     return rank
 
 
@@ -67,11 +94,7 @@ def run_qr(P, out_degree, damping, param):
 
 
 METHODS = {
-    "power": (
-        "adjacency",
-        lambda g, od, damping, param: pagerank_power(g, damping=damping)[0],
-        None,
-    ),
+    "power": ("adjacency", run_power, None),
     "lu": ("matrix", run_lu, None),
     "qr": ("matrix", run_qr, None),
     "mc-endpoint-cyclic": (
@@ -184,6 +207,70 @@ def main():
     plt.close()
     print(f"Saved {FIGURES_DIR}/runtime_comparison.png")
 
+    plt.figure(figsize=(6.5, 5))
+    for name in names:
+        x, y = runtimes[name], max(metrics[name]["l1"], 1e-300)
+        color = METHOD_COLORS.get(name, "#898781")
+        plt.scatter(x, y, color=color, s=60, zorder=3)
+        plt.annotate(
+            name,
+            (x, y),
+            textcoords="offset points",
+            xytext=(6, 6),
+            fontsize=8,
+            color="#0b0b0b",
+        )
+    plt.xscale("log")
+    plt.yscale("log")
+    plt.xlabel("Runtime (seconds, log scale)")
+    plt.ylabel("L1 error vs ground truth (log scale)")
+    plt.title("Accuracy vs. cost across methods")
+    plt.grid(True, which="both", linewidth=0.5, color="#e1e0d9", zorder=0)
+    plt.tight_layout()
+    plt.savefig(f"{FIGURES_DIR}/accuracy_vs_cost.png", dpi=150)
+    plt.close()
+    print(f"Saved {FIGURES_DIR}/accuracy_vs_cost.png")
+
+    print("\n" + "=" * 70)
+    print("Hybrid warm-start speedup: power-iteration steps vs. MC walks per node")
+    print("=" * 70)
+
+    cold_iterations = ITERATIONS["power"]
+    warm_start_m_values = [1, 2, 5, 10, 20, 50]
+    warm_iterations = []
+    for m in warm_start_m_values:
+        random.seed(m)
+        initial_rank = mc_complete_path_dangling(graph, runs_per_node=m, damping=DAMPING)
+        _, iterations = pagerank_power(
+            graph, damping=DAMPING, initial_rank=initial_rank, verbose=False
+        )
+        warm_iterations.append(iterations)
+        print(f"m = {m:3d} MC walks/node -> {iterations} power-iteration steps")
+
+    plt.figure(figsize=(6, 4.5))
+    plt.plot(
+        warm_start_m_values,
+        warm_iterations,
+        "o-",
+        color=METHOD_COLORS["hybrid-power-mc"],
+        label="MC-warm-started",
+        zorder=3,
+    )
+    plt.axhline(
+        cold_iterations,
+        color=METHOD_COLORS["power"],
+        linestyle="--",
+        label="Cold start (uniform)",
+    )
+    plt.xlabel("MC walks per node used for warm start (m)")
+    plt.ylabel("Power-iteration steps to converge")
+    plt.title("Hybrid warm-start speedup")
+    plt.legend(fontsize=8)
+    plt.tight_layout()
+    plt.savefig(f"{FIGURES_DIR}/hybrid_warm_start.png", dpi=150)
+    plt.close()
+    print(f"Saved {FIGURES_DIR}/hybrid_warm_start.png")
+
     print("\n" + "=" * 70)
     print("Monte Carlo confidence-interval sweep (Complete Path - Dangling Stop)")
     print("=" * 70)
@@ -205,13 +292,6 @@ def main():
         for r, idx in target_index.items():
             samples[r][m].append(rank[idx])
 
-    print("\nRunning Power Iteration baseline for m = 1..10 iterations...")
-    pi_at_m = {r: [] for r in TARGET_RANKS}
-    for m in M_VALUES:
-        rank_m, _ = pagerank_power(graph, damping=DAMPING, max_iterations=m, verbose=False)
-        for r, idx in target_index.items():
-            pi_at_m[r].append(rank_m[idx])
-
     for r in TARGET_RANKS:
         idx = target_index[r]
         exact_value = exact_rank[idx]
@@ -229,7 +309,6 @@ def main():
         plt.plot(M_VALUES, means, "s", color="red", label="MC complete path (dangling stop)")
         plt.plot(M_VALUES, upper, "^--", color="orange", label="MC 95% CI (upper)")
         plt.plot(M_VALUES, lower, "v--", color="green", label="MC 95% CI (lower)")
-        plt.plot(M_VALUES, pi_at_m[r], "D-", color="black", label="Power Iteration (after m iterations)")
         plt.axhline(exact_value, color="blue", label="Power Iteration (converged, exact)")
         plt.xlabel("no. of walks per node / iterations (m)")
         plt.ylabel("PageRank")
